@@ -1,2 +1,5 @@
 # leetcode
-leetcode cpp version
+leetcode solution
+  - platform: mac
+  - ide: clion
+  - language: cpp
