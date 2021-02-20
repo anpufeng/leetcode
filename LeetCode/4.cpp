@@ -56,41 +56,58 @@ using namespace std;
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int size1 = nums1.size();
-        int size2 = nums2.size();
-        if (size1 == 0) {
+        if (nums1.size() == 0) {
             return medianOfSortedArray(nums2);
         }
-        if (size2 == 0) {
+        if (nums2.size() == 0) {
             return medianOfSortedArray(nums1);
         }
 
-        int size = max(size1, size2);
-        vector<int> num;
+        return mergeToNewArray(nums1, nums2);
+    }
+
+    //time: O(m+n) space O(m+n)
+    double mergeToNewArray(vector<int>& nums1, vector<int>& nums2) {
+        int size1 = nums1.size(), size2 = nums2.size();
         int i = 0, j = 0;
-        while (i < size || j < size) {
+        vector<int> num;
+        while (i < size1 || j < size2) {
             if (i < size1 && j < size2) {
-                int n1 = nums1[i];
-                int n2 = nums2[j];
-                if (n1 >= n2) {
-                    j++;
-                    num.push_back(n2);
-                } else {
-                    i++;
-                    num.push_back(n1);
-                }
+                nums1[i] >= nums2[j] ? num.push_back(nums2[j++]) : num.push_back(nums1[i++]);
             } else if (i >= size1 && j < size2) {
-                num.push_back(nums2[j]);
-                j++;
+                num.push_back(nums2[j++]);
             } else if (i < size1 && j >= size2) {
-                num.push_back(nums1[i]);
-                i++;
-            } else {
-                break;
+                num.push_back(nums1[i++]);
             }
         }
         return medianOfSortedArray(num);
     }
+
+    //time O((m+n)/2), space O((m+n)/2), cut last half unnecessary
+    double mergeToNewArray2(vector<int>& nums1, vector<int>& nums2) {
+        int size1 = nums1.size(), size2 = nums2.size();
+        int size = size1 + size2;
+        int i = 0, j = 0;
+        vector<int> num;
+        while (i < size1 || j < size2) {
+            if (i < size1 && j < size2) {
+                nums1[i] >= nums2[j] ? num.push_back(nums2[j++]) : num.push_back(nums1[i++]);
+            } else if (i >= size1 && j < size2) {
+                num.push_back(nums2[j++]);
+            } else if (i < size1 && j >= size2) {
+                num.push_back(nums1[i++]);
+            }
+            if (num.size() == size/2+1) {
+                break;
+            }
+        }
+
+        if (size % 2 == 0) {
+            return (num[num.size()-1] + num[num.size()-2])/2.0f;
+        }
+        return num[num.size()-1];
+    }
+
     double medianOfSortedArray(vector<int> &num) {
         int size = num.size();
         if (size == 0) {
@@ -98,9 +115,8 @@ public:
         }
         if (size % 2 == 0) {
             return (num[(size-1)/2] + num[size/2])/2.0f;
-        } else {
-            return num[(size-1) / 2];
         }
+        return num[(size-1)/2];
     }
 };
 
@@ -110,6 +126,14 @@ int main() {
     vector<int> num2 = {-1,0,0,0,0,0,1};
     Solution s;
     s.findMedianSortedArrays(num1, num2);
+
+    vector<int> num3 = {1, 3};
+    vector<int> num4 = {2 };
+    double  d = s.findMedianSortedArrays(num3, num4);
+
+    vector<int> num5 = {3};
+    vector<int> num6 = {-2, -1};
+    d = s.findMedianSortedArrays(num5, num6);
 
     return 0;
 }
