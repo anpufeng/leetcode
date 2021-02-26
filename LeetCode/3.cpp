@@ -53,7 +53,7 @@ public:
         return windowBorder(s);
     }
 
-    //time O(n2) space O(n)
+    //time O(n^2) space O(n)
     int doubleLoop(string s) {
         int max = 0;
         int len = s.length();

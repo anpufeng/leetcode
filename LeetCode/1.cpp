@@ -60,7 +60,7 @@ public:
         return hashMap(nums, target);
 
     }
-    //time: O(n2) space: O(1)
+    //time: O(n^2) space: O(1)
     vector<int> doubleLoop(vector<int>& nums, int target) {
         int size = nums.size();
         for (int i = 0 ; i < size; i++) {
@@ -74,7 +74,7 @@ public:
     }
 
 
-    //time: copy O(n) sort O(nlogn) space: O(n)
+    //time: copy O(n) sort O(n^logn) space: O(n)
     vector<int> sortAndSearch(vector<int>& nums, int target) {
         int size = nums.size();
         vector<struct NumNode> numNodeList;

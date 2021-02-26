@@ -53,7 +53,7 @@ public:
         return towPointers(height);
     }
 
-    ///time O(n2) space O(1) , timout
+    ///time O(n^2) space O(1) , timout
     int bruteForce(vector<int> &height) {
         size_t  size = height.size();
         int result = 0;

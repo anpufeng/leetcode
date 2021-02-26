@@ -48,6 +48,7 @@ using namespace std;
 
 class Solution {
 public:
+    ///O(n)
     bool isValid(string s) {
         if (!s.length()) {
             return false;
